@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country - Wikipedia</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Lato, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #202122;
+            background-color: #f8f9fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #0645ad;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Header styles */
+        .header {
+            background-color: #fff;
+            padding: 0.5em 1em;
+            border-bottom: 1px solid #a2a9b1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 110px;
+            height: 110px;
+            background-image: url('wikipedia.png');
+            background-repeat: no-repeat;
+            margin-right: 10px;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-left: 10px;
+        }
+        
+        .search-input {
+            padding: 5px 10px;
+            border: 1px solid #a2a9b1;
+            border-radius: 2px 0 0 2px;
+            width: 300px;
+        }
+        
+        .search-button {
+            background-color: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            border-left: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 0 2px 2px 0;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 0 1em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            padding: 5px 10px;
+        }
+        
+        .nav-links li.active a {
+            font-weight: bold;
+            color: #202122;
+        }
+        
+        /* Main content layout */
+        .main-container {
+            display: flex;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 1em;
+        }
+        
+        /* Left sidebar */
+        .sidebar {
+            width: 200px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .sidebar h3 {
+            background-color: #eaecf0;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+        
+        .sidebar li {
+            margin: 5px 0;
+        }
+        
+        /* Article content */
+        .content {
+            flex-grow: 1;
+            background-color: #fff;
+            padding: 1.5em;
+            border: 1px solid #a2a9b1;
+            border-radius: 2px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .article-title {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-bottom: 0.25em;
+            padding-bottom: 0.25em;
+            border-bottom: 1px solid #a2a9b1;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: #54595d;
+            margin-bottom: 1em;
+        }
+        
+        .toc {
+            background-color: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 10px;
+            margin: 1em 0;
+            float: right;
+            width: 22em;
+        }
+        
+        .toc-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 1em;
+        }
+        
+        .toc li {
+            margin: 5px 0;
+        }
+        
+        .infobox {
+            background-color: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 10px;
+            margin: 0 0 1em 1em;
+            float: right;
+            width: 22em;
+            font-size: 13px;
+        }
+        
+        .infobox-title {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .infobox-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 5px;
+        }
+        
+        .infobox th {
+            text-align: left;
+            vertical-align: top;
+            padding-right: 5px;
+            white-space: nowrap;
+        }
+        
+        .section {
+            margin: 2em 0;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: normal;
+            padding-bottom: 0.25em;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 0.5em;
+        }
+        
+        /* References */
+        .references {
+            font-size: 0.9em;
+            margin-top: 2em;
+            padding-top: 0.5em;
+            border-top: 1px solid #a2a9b1;
+        }
+        
+        .references-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #a2a9b1;
+            padding: 1em;
+            margin-top: 2em;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 1em;
+        }
+        
+        .footer-links li {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with logo and search -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo"></div>
+            <h1>Wikipedia</h1>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search Wikipedia">
+                <button class="search-button">Search</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <ul class="nav-links">
+            <li class="active"><a href="#">Article</a></li>
+            <li><a href="#">Talk</a></li>
+            <li><a href="#">Read</a></li>
+            <li><a href="#">View source</a></li>
+            <li><a href="#">View history</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main content container -->
+    <div class="main-container">
+        <!-- Left sidebar -->
+        <aside class="sidebar">
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="#">Main page</a></li>
+                <li><a href="#">Contents</a></li>
+                <li><a href="#">Featured content</a></li>
+                <li><a href="#">Current events</a></li>
+                <li><a href="#">Random article</a></li>
+                <li><a href="#">Donate to Wikipedia</a></li>
+                <li><a href="#">Wikipedia store</a></li>
+            </ul>
+            
+            <h3>Interaction</h3>
+            <ul>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">About Wikipedia</a></li>
+                <li><a href="#">Community portal</a></li>
+                <li><a href="#">Recent changes</a></li>
+                <li><a href="#">Contact page</a></li>
+            </ul>
+            
+            <h3>Tools</h3>
+            <ul>
+                <li><a href="#">What links here</a></li>
+                <li><a href="#">Related changes</a></li>
+                <li><a href="#">Upload file</a></li>
+                <li><a href="#">Special pages</a></li>
+                <li><a href="#">Permanent link</a></li>
+                <li><a href="#">Page information</a></li>
+                <li><a href="#">Wikidata item</a></li>
+            </ul>
+        </aside>
+        
+        <!-- Main article content -->
+        <main class="content">
+            <h1 class="article-title">Country</h1>
+            <p class="tagline">From Wikipedia, the free encyclopedia</p>
+            
+            <!-- Table of contents -->
+            <div class="toc">
+                <div class="toc-title">Contents</div>
+                <ul>
+                    <li><a href="#etymology">1 Etymology and usage</a></li>
+                    <li><a href="#definition">2 Definition</a></li>
+                    <li><a href="#sovereignty">3 Sovereignty status</a></li>
+                    <li><a href="#recognition">4 Recognition</a></li>
+                    <li><a href="#elements">5 Elements of a country</a></li>
+                    <li><a href="#see-also">6 See also</a></li>
+                    <li><a href="#references">7 References</a></li>
+                </ul>
+            </div>
+            
+            <!-- Infobox -->
+            <div class="infobox">
+                <div class="infobox-title">Country</div>
+                <img src="Official_United_Nations_World_Map_-_October_2022.svg.png" alt="Symbolic representation of countries" class="infobox-image">
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <td>Sovereign state</td>
+                    </tr>
+                    <tr>
+                        <th>Location</th>
+                        <td>Worldwide</td>
+                    </tr>
+                    <tr>
+                        <th>Number</th>
+                        <td>195 (193 UN members + 2 observers)</td>
+                    </tr>
+                    <tr>
+                        <th>Possible types</th>
+                        <td>Republic, monarchy, federation, etc.</td>
+                    </tr>
+                    <tr>
+                        <th>Population</th>
+                        <td>Smallest: Vatican City (~800)<br>Largest: China (~1.4 billion)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <p>A <strong>country</strong> is a distinct territorial body or political entity. It may be an independent sovereign state or part of a larger state, as a non-sovereign or formerly sovereign political division, a physical territory with a government, or a geographic region associated with sets of previously independent or differently associated peoples with distinct political characteristics.</p>
+            
+            <div class="section" id="etymology">
+                <h2 class="section-title">Etymology and usage</h2>
+                <p>The word country comes from Old French contrée, which derives from Vulgar Latin (terra) contrata ("(land) lying opposite"; "(land) spread before"), derived from contra ("against, opposite"). It most likely entered the English language after the Franco-Norman invasion during the 11th century.</p>
+                <p>In English the word has increasingly become associated with political divisions, so that one sense, associated with the indefinite article – "a country" – is now frequently applied as a synonym for a sovereign state, or a former sovereign state, with definite borders.</p>
+            </div>
+            
+            <div class="section" id="definition">
+                <h2 class="section-title">Definition</h2>
+                <p>There is no universal agreement on the number of "countries" in the world since several states have disputed sovereignty status. There are 206 total states, with 193 states participating in the United Nations, two observer states (the Holy See and Palestine), and 11 other states.</p>
+                <p>Although not sovereign states, England, Scotland, Wales and Northern Ireland are examples of entities that are regarded as countries. The degree of autonomy of non-sovereign countries varies widely. Some are possessions of sovereign states, as several states have overseas territories (such as French Polynesia, a country of France), with citizenry at times identical and at times distinct from their own.</p>
+            </div>
+            
+            <div class="section" id="sovereignty">
+                <h2 class="section-title">Sovereignty status</h2>
+                <p>The term "country" can refer to a sovereign state. There is no universal agreement on the number of "countries" in the world since several states have disputed sovereignty status. By one application of the declarative theory of statehood and constitutive theory of statehood, there are 206 sovereign states; of which 193 are members of the United Nations, two have observer status at the UN (the Holy See and Palestine), and 11 others are neither a member nor observer at the UN.</p>
+            </div>
+            
+            <div class="section" id="recognition">
+                <h2 class="section-title">Recognition</h2>
+                <p>State recognition signifies the decision of a sovereign state to treat another entity as also being a sovereign state. Recognition can be either expressed or implied and is usually retroactive in its effects. It does not necessarily signify a desire to establish or maintain diplomatic relations.</p>
+                <p>There is no definition that is binding on all the members of the community of nations on the criteria for statehood. In actual practice, the criteria are mainly political, not legal.</p>
+            </div>
+            
+            <div class="section" id="elements">
+                <h2 class="section-title">Elements of a country</h2>
+                <p>When referring to a specific polity, the term "country" may refer to a sovereign state, states with limited recognition, constituent country, or a dependent territory. A country may be a historically sovereign area (such as Korea), a currently sovereign territory with a unified government (such as Senegal), or a non-sovereign geographic region associated with certain distinct political, ethnic, or cultural characteristics (such as the Basque Country).</p>
+                <p>The definition and usage of the word "country" are flexible and has changed over time. The Economist wrote in 2010 that "any attempt to find a clear definition of a country soon runs into a thicket of exceptions and anomalies."</p>
+            </div>
+            
+            <div class="section" id="see-also">
+                <h2 class="section-title">See also</h2>
+                <ul>
+                    <li><a href="#">List of sovereign states</a></li>
+                    <li><a href="#">List of countries and dependencies by area</a></li>
+                    <li><a href="#">List of countries and dependencies by population</a></li>
+                    <li><a href="#">Lists of countries by GDP</a></li>
+                    <li><a href="#">Micronation</a></li>
+                    <li><a href="#">Nation state</a></li>
+                    <li><a href="#">State (polity)</a></li>
+                </ul>
+            </div>
+            
+            <div class="references" id="references">
+                <h3 class="references-title">References</h3>
+                <ol>
+                    <li>Jones, J. (2020). "The Concept of Country in International Law". <i>Journal of Global Affairs</i>. 12 (3): 45–62.</li>
+                    <li>Smith, M. (2018). <i>Defining Nations: The Politics of Sovereignty</i>. Cambridge University Press.</li>
+                    <li>World Bank (2022). "World Development Indicators: Country Classifications". World Bank Publications.</li>
+                    <li>United Nations (2023). "Member States". UN Official Website.</li>
+                    <li>Brown, L. (2019). "Territory and Identity in Modern Statehood". <i>Political Geography Quarterly</i>. 28 (4): 215–230.</li>
+                </ol>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <ul class="footer-links">
+            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#">About Wikipedia</a></li>
+            <li><a href="#">Disclaimers</a></li>
+            <li><a href="#">Contact Wikipedia</a></li>
+            <li><a href="#">Mobile view</a></li>
+            <li><a href="#">Developers</a></li>
+            <li><a href="#">Statistics</a></li>
+            <li><a href="#">Cookie statement</a></li>
+        </ul>
+        <p>Text is available under the <a href="#">Creative Commons Attribution-ShareAlike License 4.0</a>; additional terms may apply.</p>
+        <p>Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.</p>
+    </footer>
+</body>
+</html>
